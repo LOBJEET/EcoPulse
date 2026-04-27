@@ -1,37 +1,55 @@
 import { initializeApp } from "firebase/app";
-import { initializeAuth, getReactNativePersistence } from "firebase/auth";
-import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
-import { initializeFirestore } from "firebase/firestore";
+import {
+  initializeAuth,
+  getReactNativePersistence,
+} from "@firebase/auth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getFirestore } from "firebase/firestore";
 
-// WARNING: Replace with your actual Firebase config from Firebase Console
-// Go to: Firebase Console > Project Settings > Your app > SDK setup and configuration
-const firebaseConfig = {
-  apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY || "YOUR_API_KEY",
-  authDomain: process.env.EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN || "your-project.firebaseapp.com",
-  projectId: process.env.EXPO_PUBLIC_FIREBASE_PROJECT_ID || "your-project-id",
-  storageBucket: process.env.EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET || "your-bucket.appspot.com",
-  messagingSenderId: process.env.EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "your-sender-id",
-  appId: process.env.EXPO_PUBLIC_FIREBASE_APP_ID || "your-app-id"
+const getRequiredEnv = (name: string, value: string | undefined): string => {
+  const trimmed = value?.trim();
+  if (!trimmed) {
+    throw new Error(
+      `[firebase] Missing required env var: ${name}. Set it for EAS builds with "eas env:create".`
+    );
+  }
+  return trimmed;
 };
 
-// debug: ensure config values are loaded
-console.log("[firebase] config", firebaseConfig);
-
-// detect missing fields early
-Object.entries(firebaseConfig).forEach(([k, v]) => {
-  if (!v || v.startsWith("YOUR_")) {
-    console.warn(`[firebase] configuration key ${k} is not set`);
-  }
-});
+const firebaseConfig = {
+  // IMPORTANT: Access env vars statically so Expo can inline EXPO_PUBLIC_* values in production builds.
+  apiKey: getRequiredEnv(
+    "EXPO_PUBLIC_FIREBASE_API_KEY",
+    process.env.EXPO_PUBLIC_FIREBASE_API_KEY
+  ),
+  authDomain: getRequiredEnv(
+    "EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN",
+    process.env.EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN
+  ),
+  projectId: getRequiredEnv(
+    "EXPO_PUBLIC_FIREBASE_PROJECT_ID",
+    process.env.EXPO_PUBLIC_FIREBASE_PROJECT_ID
+  ),
+  storageBucket: getRequiredEnv(
+    "EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET",
+    process.env.EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET
+  ),
+  messagingSenderId: getRequiredEnv(
+    "EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID",
+    process.env.EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+  ),
+  appId: getRequiredEnv(
+    "EXPO_PUBLIC_FIREBASE_APP_ID",
+    process.env.EXPO_PUBLIC_FIREBASE_APP_ID
+  ),
+};
 
 const app = initializeApp(firebaseConfig);
 
-// initialize auth with async-storage persistence for React Native
+// Initialize auth and firestore
 export const auth = initializeAuth(app, {
-  persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+  persistence: getReactNativePersistence(AsyncStorage),
 });
 
 // Long polling avoids WebChannel hangs on React Native / Expo (addDoc never resolving).
-export const db = initializeFirestore(app, {
-  experimentalForceLongPolling: true,
-});
+export const db = getFirestore(app);

@@ -10,6 +10,7 @@ import CommunityGroupDetailScreen from "../screens/CommunityGroupDetailScreen";
 import GroupChatsListScreen from "../screens/GroupChatsListScreen";
 import GroupChatRoomScreen from "../screens/GroupChatRoomScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import { useAuth } from "../context/AuthContext";
 import { colors } from "../theme/colors";
 import type { GroupChatsStackParamList } from "./types";
 
@@ -133,11 +134,29 @@ function MainAppNavigator() {
 
 // Root Stack Navigator
 export default function AppNavigator() {
+  const { user, loading } = useAuth();
+
+  // Keep a minimal navigator while auth state is loading.
+  // This avoids showing tabs briefly and ensures logout always lands on Login.
+  if (loading) {
+    return (
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Splash" component={SplashScreen} />
+      </Stack.Navigator>
+    );
+  }
+
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Splash" component={SplashScreen} />
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="MainApp" component={MainAppNavigator} />
+    <Stack.Navigator
+      // Reset navigator state when user signs in/out.
+      key={user ? "user" : "guest"}
+      screenOptions={{ headerShown: false }}
+    >
+      {user ? (
+        <Stack.Screen name="MainApp" component={MainAppNavigator} />
+      ) : (
+        <Stack.Screen name="Login" component={LoginScreen} />
+      )}
     </Stack.Navigator>
   );
 }

@@ -137,16 +137,6 @@ export default function ProfileScreen({ navigation }: { navigation: any }) {
     await profilePreferencesService.savePrivateProfile(v);
   };
 
-  const resetToLogin = () => {
-    let nav: typeof navigation = navigation;
-    while (typeof nav.getParent === "function" && nav.getParent()) {
-      nav = nav.getParent();
-    }
-    if (typeof nav.reset === "function") {
-      nav.reset({ index: 0, routes: [{ name: "Login" }] });
-    }
-  };
-
   const onLogout = async () => {
     Alert.alert("Sign out", "You will need to sign in again to use EcoPulse.", [
       { text: "Cancel", style: "cancel" },
@@ -156,7 +146,6 @@ export default function ProfileScreen({ navigation }: { navigation: any }) {
         onPress: async () => {
           try {
             await logout();
-            resetToLogin();
           } catch (e: any) {
             Alert.alert("Error", e?.message ?? "Could not sign out.");
           }
@@ -170,7 +159,7 @@ export default function ProfileScreen({ navigation }: { navigation: any }) {
       case "account":
         Alert.alert(
           "Account",
-          `Signed in as\n${email || "—"}\n\nTo change your password or email, use Firebase Authentication in your project console, or add an “update password” flow later.`,
+          `Signed in as\n${email || "—"}\n\nAccount settings updates will be available in a future version of the app.`,
           [{ text: "OK" }]
         );
         break;
@@ -187,14 +176,14 @@ export default function ProfileScreen({ navigation }: { navigation: any }) {
         }).catch(() => {});
         break;
       case "help":
-        Linking.openURL("mailto:support@ecopulse.app?subject=EcoPulse%20help").catch(() => {
-          Alert.alert("Help", "Email us at support@ecopulse.app");
+        Linking.openURL("mailto:ecopulse.labs@gmail.com?subject=EcoPulse%20help").catch(() => {
+          Alert.alert("Help", "Email us at ecopulse.labs@gmail.com");
         });
         break;
       case "legal":
         Alert.alert(
           "Terms & privacy",
-          "EcoPulse is a demo / capstone project. Do not enter sensitive personal data. Carbon estimates are approximate. By using the app you agree to use it responsibly.",
+          "EcoPulse is an educational demo / capstone project.\n\nDo not enter sensitive personal or confidential information.\n\nCarbon footprint estimates are approximate and for awareness purposes only.\n\nBy using this app, you agree to use it responsibly.",
           [{ text: "OK" }]
         );
         break;

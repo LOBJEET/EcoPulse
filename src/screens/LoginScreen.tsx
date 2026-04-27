@@ -71,11 +71,6 @@ export default function LoginScreen({ navigation }: any) {
       } else {
         await login(email, password);
       }
-      // reset navigation stack so user can't go back to login
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "MainApp" }],
-      });
     } catch (err: any) {
       Alert.alert("Error", err.message);
     } finally {

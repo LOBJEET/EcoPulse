@@ -4,7 +4,7 @@
     "slug": "ecopulse",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/favicon.png",
     "scheme": "ecopulse",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
@@ -26,6 +26,7 @@
     "android": {
       "package": "com.ecopulse.app",
       "versionCode": 1,
+      "googleServicesFile": "./google-services.json",
       "permissions": [
         "android.permission.INTERNET",
         "android.permission.ACCESS_NETWORK_STATE"
@@ -33,12 +34,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/favicon.png",
         "backgroundColor": "#2ecc71"
-      },
-      "usesCleartextTraffic": false
+      }
     },
     "web": {
       "favicon": "./assets/images/favicon.png",
       "output": "static"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "bed6aef9-0a52-4d3d-b200-d1ef74e44d3f"
+      }
+    },
+    "owner": "pratik009"
   }
 }
