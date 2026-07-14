@@ -24,7 +24,7 @@
       "buildNumber": "1"
     },
     "android": {
-      "package": "com.ecopulse.app",
+      "package": "com.ecopulse.tracker",
       "versionCode": 1,
       "googleServicesFile": "./google-services.json",
       "permissions": [

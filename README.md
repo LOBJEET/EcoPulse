@@ -1,5 +1,10 @@
 # EcoPulse - Digital Environmental Awareness App
 
+[![Live App on Google Play](https://img.shields.io/badge/Live%20App-Google%20Play-brightgreen?logo=google-play)](https://play.google.com/store/apps/details?id=com.ecopulse.tracker)
+
+## 🚀 Live App
+Open EcoPulse directly on Google Play: https://play.google.com/store/apps/details?id=com.ecopulse.tracker
+
 ## 📱 About EcoPulse
 
 EcoPulse is a mobile application that promotes environmental awareness and encourages users to adopt eco-friendly habits through gamification, community engagement, and real-time tracking.
@@ -16,41 +21,115 @@ Increase public awareness about climate change and sustainability while empoweri
 - **💡 Personalized Tips**: AI-powered sustainability recommendations
 - **👤 User Profile**: Track personal progress, badges, and statistics
 
-## 📋 Project Structure
+## � App Screenshots
+
+![EcoPulse Home Dashboard](assets/images/1000109243.jpg)
+
+![EcoPulse Carbon Impact](assets/images/1000109248.png)
+
+![EcoPulse Habit Tracking](assets/images/1000109247.png)
+
+![EcoPulse Community Impact](assets/images/1000109244.png)
+
+![EcoPulse Group Chat](assets/images/1000109245.png)
+
+![EcoPulse Profile and Progress](assets/images/1000109246.png)
+
+## �📋 Product & Project Structure
 
 ```
 EcoPulseMobile/
-├── src/
-│   ├── screens/
-│   │   ├── SplashScreen.tsx          # Launch screen
-│   │   ├── LoginScreen.tsx           # Authentication
-│   │   ├── HomeScreen.tsx            # Main dashboard
-│   │   ├── HabitsScreen.tsx          # Daily habit tracking
-│   │   ├── CommunityScreen.tsx       # Community stats & leaderboard
-│   │   └── ProfileScreen.tsx         # User profile & settings
+├── App.tsx                        # App entry point
+├── app.json                       # Expo app configuration
+├── eas.json                       # EAS build configuration
+├── package.json                   # npm dependencies and scripts
+├── tsconfig.json                  # TypeScript configuration
+├── google-services.json           # Firebase Android config
+├── firestore.rules                # Firebase security rules
+├── android/                       # Native Android project files
+│   ├── build.gradle
+│   ├── gradle.properties
+│   ├── gradlew
+│   ├── gradlew.bat
+│   ├── settings.gradle
+│   ├── app/
+│   │   ├── build.gradle
+│   │   ├── google-services.json
+│   │   ├── proguard-rules.pro
+│   │   └── src/
+│   │       ├── debug/
+│   │       │   └── AndroidManifest.xml
+│   │       ├── debugOptimized/
+│   │       │   └── AndroidManifest.xml
+│   │       └── main/
+│   │           ├── AndroidManifest.xml
+│   │           ├── java/
+│   │           │   └── com/ecopulse/app/
+│   │           │       ├── MainActivity.kt
+│   │           │       └── MainApplication.kt
+│   │           └── res/
+│   │               ├── drawable/
+│   │               ├── drawable-hdpi/
+│   │               ├── drawable-mdpi/
+│   │               ├── drawable-xhdpi/
+│   │               ├── drawable-xxhdpi/
+│   │               ├── drawable-xxxhdpi/
+│   │               ├── mipmap-anydpi-v26/
+│   │               ├── mipmap-hdpi/
+│   │               ├── mipmap-mdpi/
+│   │               ├── mipmap-xhdpi/
+│   │               ├── mipmap-xxhdpi/
+│   │               ├── mipmap-xxxhdpi/
+│   │               ├── values/
+│   │               └── values-night/
+├── src/                           # Application source code
 │   ├── components/
-│   │   ├── PrimaryButton.tsx         # Reusable button component
-│   │   └── HabitCard.tsx             # Habit card component
-│   ├── navigation/
-│   │   └── AppNavigator.tsx          # Navigation structure
-│   ├── services/
-│   │   ├── firebase.ts               # Firebase configuration
-│   │   ├── authService.ts            # Authentication logic
-│   │   └── habitService.ts           # Habit management
+│   │   ├── HabitCard.tsx           # Habit card component
+│   │   └── PrimaryButton.tsx       # Reusable button component
 │   ├── context/
-│   │   └── AuthContext.tsx           # Global auth state
+│   │   ├── AuthContext.tsx         # Global auth state
+│   │   └── HabitContext.tsx        # Habit state management
 │   ├── hooks/
-│   │   └── useAuth.ts                # Auth custom hook
+│   │   └── useAuth.ts              # Auth custom hook
+│   ├── navigation/
+│   │   ├── AppNavigator.tsx        # Navigation structure
+│   │   └── types.ts                # Navigation types
+│   ├── screens/
+│   │   ├── CommunityGroupDetailScreen.tsx
+│   │   ├── CommunityScreen.tsx
+│   │   ├── GroupChatRoomScreen.tsx
+│   │   ├── GroupChatsListScreen.tsx
+│   │   ├── HabitsScreen.tsx
+│   │   ├── HomeScreen.tsx
+│   │   ├── LoginScreen.tsx
+│   │   ├── ProfileScreen.tsx
+│   │   └── SplashScreen.tsx
+│   ├── services/
+│   │   ├── authService.ts          # Authentication logic
+│   │   ├── communityAnalyticsService.ts
+│   │   ├── communityService.ts
+│   │   ├── firebase.ts             # Firebase configuration
+│   │   ├── groupChatService.ts
+│   │   ├── habitService.ts         # Habit management
+│   │   ├── logService.ts
+│   │   └── profilePreferencesService.ts
 │   ├── theme/
-│   │   └── colors.ts                 # Color scheme
+│   │   └── colors.ts               # Color scheme
 │   └── types/
-│       ├── Habit.ts                  # Habit data type
-│       └── User.ts                   # User data type
+│       ├── Habit.ts                # Habit data type
+│       ├── User.ts                 # User data type
+│       └── firebase-auth-react-native.d.ts
 └── assets/
     └── images/
-        ├── app-icon.png              # App icon
-        ├── splash.png                # Splash screen
-        └── adaptive-icon.png         # Adaptive icon
+        ├── 1000109243.jpg
+        ├── 1000109244.png
+        ├── 1000109245.png
+        ├── 1000109246.png
+        ├── 1000109247.png
+        ├── 1000109248.png
+        ├── app-icon.png
+        ├── splash.png
+        └── adaptive-icon.png
 ```
 
 ## 🚀 Quick Start
@@ -268,7 +347,8 @@ MIT License - See LICENSE file for details
 
 **Current Version**: 1.0.0  
 **Last Updated**: February 2024  
-**Status**: Ready for Testing & Play Store Deployment
+**Status**: Deployed on Google Play Store  
+**Play Store**: https://play.google.com/store/apps/details?id=com.ecopulse.tracker
 
 ---
 
